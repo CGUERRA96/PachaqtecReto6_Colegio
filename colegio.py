@@ -48,5 +48,53 @@ class Alumno:
         except Exception as e:
             print(f'{str(e)}')
 
-alumno = Alumno('Christian', 24, 'christian.guerra1013@gmail.com','M')
-alumno.fetchall_alumnos()
+#alumno = Alumno('Christian', 24, 'christian.guerra1013@gmail.com','M')
+#alumno.fetchall_alumnos()
+
+class Docente:
+    def __init__(self, nombre_docente, edad_docente, correo_dcoente, sexo_docente):
+        self.nombre_docente = nombre_docente
+        self.edad_docente = edad_docente
+        self.correo_dcoente = correo_dcoente
+        self.sexo_docente = sexo_docente
+        self.create_table_docente()
+
+    def create_table_docente(self):
+        try:
+            conn = Connection()
+            query = '''
+                CREATE TABLE IF NOT EXISTS TB_DOCENTE(
+                    IdDocente SERIAL PRIMARY KEY NOT NULL,
+                    nombre_docente VARCHAR(255) NOT NULL,
+                    edad_docente INT,
+                    correo_docente VARCHAR(255),
+                    sexo_docente VARCHAR(1)
+                );
+            '''
+
+            conn.execute_query(query)
+            conn.commit()
+        except Exception as e:
+            raise print(e)
+
+    def fetchall_docente(self):
+        try:
+            conn= Connection()
+            query= '''
+                SELECT * FROM TB_DOCENTE;
+            '''
+            cursor = conn.execute_query(query)
+            rows = cursor.fetchall()
+
+            for row in rows:
+                print(f'IdDocente = {row[0]}')
+                print(f'nombre_docente = {row[1]}')
+                print(f'edad_docente = {row[2]}')
+                print(f'correo_docente = {row[3]}')
+                print(f'sexo_docente = {row[4]}')
+                print('=============================')
+        except Exception as e:
+            print(f'{str(e)}')
+
+#docente = Docente('Christian', 24, 'christian.guerra1013@gmail.com','M')
+#docente.fetchall_docente()
