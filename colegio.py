@@ -98,3 +98,33 @@ class Docente:
 
 #docente = Docente('Christian', 24, 'christian.guerra1013@gmail.com','M')
 #docente.fetchall_docente()
+
+#class Curso:
+
+#class Salon:
+
+#class Seccion:
+
+#class Periodo:
+
+#class Nivel:
+
+#class Grado:
+
+#class Periodo_Evaluacion:
+
+##Tablas Pivots
+
+#class Grado_Nivel:
+
+#class Gardo_Nivel_Seccion:
+
+#class Ubicacion:
+
+#class Docente_Curso:
+
+#class Asignacion_Docente:
+
+#class Asignacion_Alumno:
+
+#class Periodo_Evaluacion_Detalle:
