@@ -3,11 +3,11 @@ from psycopg2 import connect, Error
 
 class Connection:
     def __init__(self, server='127.0.0.1', user='postgres', 
-                        password='123456', database='Colegio_BD', port=4310):
+                        password='123456', database='Colegio_BD', port=5432):
         self.db = connect(host=server, user=user, password=password, 
                         database=database, port=port)
         self.cursor = self.db.cursor()
-        print(f'Conexión a la base de datos {database}, exitosa')
+        #print(f'Conexión a la base de datos {database}, exitosa')
 
     def execute_query(self, sql):
         self.cursor.execute(sql)

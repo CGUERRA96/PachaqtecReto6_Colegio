@@ -1,4 +1,4 @@
-from connection.conn import Connection
+from conn import Connection
 
 class Alumno:
     def __init__(self, nombre_alumno, edad_alumno, correo_alumno, sexo_alumno):
@@ -7,6 +7,8 @@ class Alumno:
         self.correo_alumno = correo_alumno
         self.sexo_alumno = sexo_alumno
         self.create_table_alumno()
+
+        #print('Hola')
 
     def create_table_alumno(self):
         try:
@@ -27,7 +29,7 @@ class Alumno:
         except Exception as e:
             raise print(e)
 
-    def fetchall_mobiles(self):
+    def fetchall_alumnos(self):
         try:
             conn= Connection()
             query= '''
@@ -45,3 +47,6 @@ class Alumno:
                 print('=============================')
         except Exception as e:
             print(f'{str(e)}')
+
+alumno = Alumno('Christian', 24, 'christian.guerra1013@gmail.com','M')
+alumno.fetchall_alumnos()
