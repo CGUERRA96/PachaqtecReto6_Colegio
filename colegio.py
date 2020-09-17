@@ -1376,6 +1376,109 @@ class Periodo_Evaluacion_Detalle:
         except Exception as e:
             print(f'{str(e)}')
 
+
+class Reportes:
+
+    def primer_reporte(self):
+
+        try:
+            conn= Connection()
+            query= '''
+                Select d.Nombre_docente as Nombre_Docente, cs.nombrecurso, ss.num_salon, al.nombre_alumno
+                from tb_asignacion_alumno aa
+                left join tb_alumno al on aa.idalumno = al.idalumno
+                left join tb_asignacion_docente ad on aa.idasigdoc = ad.idasigdocente
+                left join tb_docente_curso dc on ad.idcursodocente = dc.iddocentecurso
+                left join tb_docente d on dc.iddocente = d.iddocente
+                left join tb_cursos cs on cs.idcurso = dc.idcurso
+                left join tb_ubicacion u on u.idubicacion = ad.idubicacion
+                left join tb_grado_nivel_seccion gns on u.id_grados_nivel = gns.idgradoseccion
+                left join tb_grado_nivel gn on gns.idgradosnivel = gn.idgradonivel
+                left join tb_grado gr on gr.idgrado = gn.idgrado
+                left join tb_nivel nv on nv.idnivel = gn.idnivel
+                left join tb_seccion sc on gns.idseccion = sc.idseccion
+                left join tb_salon ss on u.id_salon = ss.idsalon
+                left join tb_anio_escolar ae on gns.idanioescolar = ae.idanioescolar;
+                ;'''
+            cursor = conn.execute_query(query)
+            rows = cursor.fetchall()
+
+            for row in rows:
+
+                print(f'{row[0]} - {row[1]} - {row[2]} - {row[3]}')
+
+        except Exception as e:
+
+            print(f'{str(e)}')
+
+
+    def segundo_reporte(self):
+
+        try:
+            conn= Connection()
+            query= '''
+                Select al.nombre_alumno, cs.nombrecurso, ss.num_salon
+                from tb_asignacion_alumno aa
+                left join tb_alumno al on aa.idalumno = al.idalumno
+                left join tb_asignacion_docente ad on aa.idasigdoc = ad.idasigdocente
+                left join tb_docente_curso dc on ad.idcursodocente = dc.iddocentecurso
+                left join tb_docente d on dc.iddocente = d.iddocente
+                left join tb_cursos cs on cs.idcurso = dc.idcurso
+                left join tb_ubicacion u on u.idubicacion = ad.idubicacion
+                left join tb_grado_nivel_seccion gns on u.id_grados_nivel = gns.idgradoseccion
+                left join tb_grado_nivel gn on gns.idgradosnivel = gn.idgradonivel
+                left join tb_grado gr on gr.idgrado = gn.idgrado
+                left join tb_nivel nv on nv.idnivel = gn.idnivel
+                left join tb_seccion sc on gns.idseccion = sc.idseccion
+                left join tb_salon ss on u.id_salon = ss.idsalon
+                left join tb_anio_escolar ae on gns.idanioescolar = ae.idanioescolar
+                group by al.nombre_alumno, cs.nombrecurso, ss.num_salon;'''
+            cursor = conn.execute_query(query)
+            rows = cursor.fetchall()
+
+            for row in rows:
+
+                print(f'{row[0]} - {row[1]} - {row[2]}')
+
+        except Exception as e:
+
+            print(f'{str(e)}')
+
+    def cuarto_reporte(self, num_salon):
+
+        try:
+            conn= Connection()
+            query= f'''
+                Select pe.nombretiempo as nombre_evaluacion, cs.nombrecurso, avg(ped.nota) As PromedioNotas
+                from tb_per_eval_det ped
+                left join tb_asignacion_alumno aa on ped.idasignacion_alumno = aa.idalumnodocsalon
+                left join tb_periodo_evaluacion pe on ped.idperiodoeval = pe.idperiodoeval
+                left join tb_alumno al on aa.idalumno = al.idalumno
+                left join tb_asignacion_docente ad on aa.idasigdoc = ad.idasigdocente
+                left join tb_docente_curso dc on ad.idcursodocente = dc.iddocentecurso
+                left join tb_docente d on dc.iddocente = d.iddocente
+                left join tb_cursos cs on cs.idcurso = dc.idcurso
+                left join tb_ubicacion u on u.idubicacion = ad.idubicacion
+                left join tb_grado_nivel_seccion gns on u.id_grados_nivel = gns.idgradoseccion
+                left join tb_grado_nivel gn on gns.idgradosnivel = gn.idgradonivel
+                left join tb_grado gr on gr.idgrado = gn.idgrado
+                left join tb_nivel nv on nv.idnivel = gn.idnivel
+                left join tb_seccion sc on gns.idseccion = sc.idseccion
+                left join tb_salon ss on u.id_salon = ss.idsalon
+                left join tb_anio_escolar ae on gns.idanioescolar = ae.idanioescolar
+                where ss.idsalon = {num_salon}
+                group by pe.nombretiempo, cs.nombrecurso;'''
+            cursor = conn.execute_query(query)
+            rows = cursor.fetchall()
+
+            for row in rows:
+
+                print(f'{row[0]} - {row[1]} - {row[2]}')
+
+        except Exception as e:
+
+            print(f'{str(e)}')
+
 #fin = Periodo_Evaluacion_Detalle(1,1,17)
 #fin.fetchall_TB_Per_Eval_Det()
 

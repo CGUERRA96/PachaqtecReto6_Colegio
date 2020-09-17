@@ -1,7 +1,7 @@
 from time import sleep
-from colegio import Alumno, Docente, Curso, Salon, Seccion, Grado, Anio_Escolar, Docente_Curso, Periodo_Evaluacion_Detalle, Periodo_Evaluacion, Grado_Nivel,Grado_Nivel_Seccion, Ubicacion, Asignacion_Alumno, Asignacion_Docente
+from colegio import Alumno, Docente, Curso, Salon, Seccion, Grado, Anio_Escolar, Docente_Curso, Periodo_Evaluacion_Detalle, Periodo_Evaluacion, Grado_Nivel,Grado_Nivel_Seccion, Ubicacion, Asignacion_Alumno, Asignacion_Docente, Reportes
 
-class Interfaz(Alumno, Docente, Curso, Salon, Seccion, Grado, Anio_Escolar, Docente_Curso, Periodo_Evaluacion_Detalle, Periodo_Evaluacion, Grado_Nivel,Grado_Nivel_Seccion, Ubicacion, Asignacion_Alumno, Asignacion_Docente):
+class Interfaz(Alumno, Docente, Curso, Salon, Seccion, Grado, Anio_Escolar, Docente_Curso, Periodo_Evaluacion_Detalle, Periodo_Evaluacion, Grado_Nivel,Grado_Nivel_Seccion, Ubicacion, Asignacion_Alumno, Asignacion_Docente, Reportes):
     def interfaz(self):
 
         print('''\nBienvenido al Menú Principal del Colegio
@@ -577,6 +577,37 @@ class Interfaz(Alumno, Docente, Curso, Salon, Seccion, Grado, Anio_Escolar, Doce
                 ubicaciones = Ubicacion(id_grados_nivel, id_salon)
 
                 ubicaciones.update_ubicacion(IdUbicacion)
+        elif opcion_principal == '6':
+
+            print('''\n¿Que reportes deseas ver?
+            1) Reporte de relacion de docentes con su respectiva curso, salón y alumnos
+            2) Reporte de relacion de alumnos con su salón, cursos 
+            3) Reporte de relacion de profesor por curso
+            4) Reporte por exportar - Periodo Escolar''')
+
+            opcion_reporte = input('> ')
+
+            if opcion_reporte == '1':
+
+                self.primer_reporte()
+            
+            elif opcion_reporte == '2':
+
+                self.segundo_reporte()
+
+            elif opcion_reporte == '3':
+
+                self.fetchall_TB_Docente_Curso()
+
+            elif opcion_reporte == '4':
+                
+                print('\n=== LISTA DE SALONES ===\n')
+
+                self.fetchall_Salon()
+
+                salon_numero = int(input('Ingrese el Salon: '))
+
+                self.cuarto_reporte(salon_numero)
 
 class Inicio(Interfaz):
     def __init__(self):
