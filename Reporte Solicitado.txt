@@ -1,6 +1,0 @@
-Nro1 - Periodo: Primer Bimestre - Nombre Curso: Algebra - Promedio Notas: 20.0
-Nro2 - Periodo: Primer Bimestre - Nombre Curso: Geometria - Promedio Notas: 15.5
-Nro3 - Periodo: Segundo Bimestre - Nombre Curso: Geometria - Promedio Notas: 16.0
-Nro1 - Periodo: Primer Bimestre - Nombre Curso: Algebra - Promedio Notas: 20.0
-Nro2 - Periodo: Primer Bimestre - Nombre Curso: Geometria - Promedio Notas: 15.5
-Nro3 - Periodo: Segundo Bimestre - Nombre Curso: Geometria - Promedio Notas: 16.0
