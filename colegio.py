@@ -1,5 +1,6 @@
 from conn import Connection
 from time import sleep
+import os
 
 class Alumno:
     def __init__(self, nombre_alumno, edad_alumno, correo_alumno, sexo_alumno):
@@ -49,10 +50,6 @@ class Alumno:
     def insert_alumnos(self):
         try:
             conn = Connection()
-            self.nombre_alumno = input(f'Insertar nuevo alumno: ')
-            self.edad_alumno = int(input(f'Insertar nueva edad del alumno: '))
-            self.correo_alumno = input(f'Insertar correo del nuevo alumno: ')
-            self.sexo_alumno = input(f'Insertar el sexo del nuevo alumno: ')
 
             query = f'''
                 INSERT INTO TB_ALUMNO (nombre_alumno, edad_alumno, correo_alumno, sexo_alumno)
@@ -65,15 +62,13 @@ class Alumno:
         except Exception as e:
             print(f'{str(e)}')
     
-    def update_alumnos(self):
+    def update_alumnos(self, IdAlumno):
         try:
             conn = Connection()
             self.nombre_alumno = input(f'Actualizar al alumno: ')
             self.edad_alumno = int(input(f'Actualizar la edad del alumno: '))
             self.correo_alumno = input(f'Actualizar el correo del alumno: ')
             self.sexo_alumno = input(f'Actualizar el sexo del alumno: ')
-
-            IdAlumno = int(input('Indicar el IdAlumno: '))
 
             query = f'''
                 UPDATE TB_ALUMNO SET nombre_alumno = '{self.nombre_alumno}', edad_alumno = {self.edad_alumno}, correo_alumno = '{self.correo_alumno}', sexo_alumno = '{self.sexo_alumno}'
@@ -1444,7 +1439,13 @@ class Reportes:
 
             print(f'{str(e)}')
 
-    def cuarto_reporte(self, num_salon):
+class Reporte_extraida:
+    def __init__(self,num_salon, nombre_archivo):
+        self.num_salon = num_salon
+        self.nombre_archivo = nombre_archivo
+        self.cuarto_reporte()
+
+    def cuarto_reporte(self):
 
         try:
             conn= Connection()
@@ -1466,18 +1467,36 @@ class Reportes:
                 left join tb_seccion sc on gns.idseccion = sc.idseccion
                 left join tb_salon ss on u.id_salon = ss.idsalon
                 left join tb_anio_escolar ae on gns.idanioescolar = ae.idanioescolar
-                where ss.idsalon = {num_salon}
+                where ss.num_salon = {self.num_salon}
                 group by pe.nombretiempo, cs.nombrecurso;'''
             cursor = conn.execute_query(query)
             rows = cursor.fetchall()
 
-            for row in rows:
+            try:
+                extendencion= f'{self.nombre_archivo}.txt'
+                file = open(str(extendencion),'w')
+                fila_archivos = ''
+                n = 1
+                for row in rows:
 
-                print(f'{row[0]} - {row[1]} - {row[2]}')
+                    fila_archivos += f'Nro{n} - Periodo: {row[0]} - Nombre Curso: {row[1]} - Promedio Notas: {row[2]}\n'
+                    
+                    n += 1
+
+                file.write(fila_archivos)
+                
+                print('Se genero el reporte')
+            except Exception as e:
+                print(f'{str(e)}')
+            finally:
+                if file:
+                    file.close()
 
         except Exception as e:
 
             print(f'{str(e)}')
+
+
 
 #fin = Periodo_Evaluacion_Detalle(1,1,17)
 #fin.fetchall_TB_Per_Eval_Det()

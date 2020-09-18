@@ -1,7 +1,7 @@
 from time import sleep
-from colegio import Alumno, Docente, Curso, Salon, Seccion, Grado, Anio_Escolar, Docente_Curso, Periodo_Evaluacion_Detalle, Periodo_Evaluacion, Grado_Nivel,Grado_Nivel_Seccion, Ubicacion, Asignacion_Alumno, Asignacion_Docente, Reportes
+from colegio import Alumno, Docente, Curso, Salon, Seccion, Grado, Anio_Escolar, Docente_Curso, Periodo_Evaluacion_Detalle, Periodo_Evaluacion, Grado_Nivel,Grado_Nivel_Seccion, Ubicacion, Asignacion_Alumno, Asignacion_Docente, Reportes, Reporte_extraida
 
-class Interfaz(Alumno, Docente, Curso, Salon, Seccion, Grado, Anio_Escolar, Docente_Curso, Periodo_Evaluacion_Detalle, Periodo_Evaluacion, Grado_Nivel,Grado_Nivel_Seccion, Ubicacion, Asignacion_Alumno, Asignacion_Docente, Reportes):
+class Interfaz(Alumno, Docente, Curso, Salon, Seccion, Grado, Anio_Escolar, Docente_Curso, Periodo_Evaluacion_Detalle, Periodo_Evaluacion, Grado_Nivel,Grado_Nivel_Seccion, Ubicacion, Asignacion_Alumno, Asignacion_Docente, Reportes, Reporte_extraida):
     def interfaz(self):
 
         print('''\nBienvenido al Menú Principal del Colegio
@@ -248,20 +248,29 @@ class Interfaz(Alumno, Docente, Curso, Salon, Seccion, Grado, Anio_Escolar, Doce
                 )
                 opcion_alumno = input("> ")
                 if opcion_alumno == '1':
-                    self.insert_alumnos()
+
+                    self.fetchall_alumnos()
+
+                    nombre_alumno = input(f'Insertar nuevo alumno: ')
+                    edad_alumno = int(input(f'Insertar nueva edad del alumno: '))
+                    correo_alumno = input(f'Insertar correo del nuevo alumno: ')
+                    sexo_alumno = input(f'Insertar el sexo del nuevo alumno: ')
+
+                    alumnos = Alumno(nombre_alumno, edad_alumno, correo_alumno, sexo_alumno)
+
+                    alumnos.insert_alumnos()
+
                 elif opcion_alumno == '2':
-                    print('''
-                    Para actualizar: 
-                    -Debe de tener el IdAlumno, caso contrario regrese y escoja la opcion "Mostrar Alumno"
-                    ¿Tiene el IdAlumno? (Si = 1 , No = 2)
-                    ''')
-                    escoger = input('> ')
-                    if escoger == '1':
-                        self.update_alumnos()
-                    elif escoger == '2':
-                        return
-                    else:
-                        print('\nHas introducido una opción erronea')
+
+                    self.fetchall_alumnos()
+
+                    idalumno = int(input('Elergir alumnopara modificar: '))
+
+                    print('Empecemosa modificar :)')
+
+                    self.update_alumnos(idalumno)
+
+
                 elif opcion_alumno == '3':
                     self.delete_alumno()
                 elif opcion_alumno == '4':
@@ -601,13 +610,18 @@ class Interfaz(Alumno, Docente, Curso, Salon, Seccion, Grado, Anio_Escolar, Doce
 
             elif opcion_reporte == '4':
                 
+                
+                archivo = input('Especificar el nombre del reporte.: ')
+
                 print('\n=== LISTA DE SALONES ===\n')
 
                 self.fetchall_Salon()
 
                 salon_numero = int(input('Ingrese el Salon: '))
 
-                self.cuarto_reporte(salon_numero)
+                reporte = Reporte_extraida(salon_numero, archivo)
+
+                reporte.cuarto_reporte()
 
 class Inicio(Interfaz):
     def __init__(self):
