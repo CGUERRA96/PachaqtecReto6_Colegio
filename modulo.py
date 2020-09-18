@@ -96,7 +96,14 @@ class Interfaz(Alumno, Docente, Curso, Salon, Seccion, Grado, Anio_Escolar, Doce
 
                     IdPeriodoEval = int(input('Elegir el periodo de evaluación: '))
 
-                    nota = int(input('Ingresar nota del alumno: '))
+                    while True:
+
+                        nota = int(input('Ingresar nota del alumno: '))
+
+                        if nota >= 0 and nota <= 20:
+                            break
+                        else:
+                            print('Ingresar una nota entre 00 al 20')
 
                     asignar_nota = Periodo_Evaluacion_Detalle(IdAsignacion_Alumno,IdPeriodoEval,nota)
 
@@ -269,8 +276,6 @@ class Interfaz(Alumno, Docente, Curso, Salon, Seccion, Grado, Anio_Escolar, Doce
                     print('Empecemosa modificar :)')
 
                     self.update_alumnos(idalumno)
-
-
                 elif opcion_alumno == '3':
                     self.delete_alumno()
                 elif opcion_alumno == '4':
@@ -622,6 +627,9 @@ class Interfaz(Alumno, Docente, Curso, Salon, Seccion, Grado, Anio_Escolar, Doce
                 reporte = Reporte_extraida(archivo)
 
                 reporte.cuarto_reporte(salon_numero)
+        elif opcion_principal == '7':
+            print('\nGracias por su atención ... Que tenga un buen dia :) !!!!!')
+            quit()
 
 class Inicio(Interfaz):
     def __init__(self):
