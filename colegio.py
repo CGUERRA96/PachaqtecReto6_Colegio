@@ -1440,12 +1440,10 @@ class Reportes:
             print(f'{str(e)}')
 
 class Reporte_extraida:
-    def __init__(self,num_salon, nombre_archivo):
-        self.num_salon = num_salon
+    def __init__(self, nombre_archivo):
         self.nombre_archivo = nombre_archivo
-        self.cuarto_reporte()
 
-    def cuarto_reporte(self):
+    def cuarto_reporte(self,num_salon):
 
         try:
             conn= Connection()
@@ -1467,7 +1465,7 @@ class Reporte_extraida:
                 left join tb_seccion sc on gns.idseccion = sc.idseccion
                 left join tb_salon ss on u.id_salon = ss.idsalon
                 left join tb_anio_escolar ae on gns.idanioescolar = ae.idanioescolar
-                where ss.num_salon = {self.num_salon}
+                where ss.num_salon = {num_salon}
                 group by pe.nombretiempo, cs.nombrecurso;'''
             cursor = conn.execute_query(query)
             rows = cursor.fetchall()

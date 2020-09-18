@@ -619,9 +619,9 @@ class Interfaz(Alumno, Docente, Curso, Salon, Seccion, Grado, Anio_Escolar, Doce
 
                 salon_numero = int(input('Ingrese el Salon: '))
 
-                reporte = Reporte_extraida(salon_numero, archivo)
+                reporte = Reporte_extraida(archivo)
 
-                reporte.cuarto_reporte()
+                reporte.cuarto_reporte(salon_numero)
 
 class Inicio(Interfaz):
     def __init__(self):
